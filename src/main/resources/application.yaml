@@ -1,0 +1,18 @@
+server:
+  port: 5000
+
+vault:
+  address: http://127.0.0.1:8200
+  token: your_defined_token
+
+spring:
+  cloud:
+    vault:
+      token: hvs.6jz8gQNhaKhZWSnZBixfvPSt
+      scheme: http
+
+
+#  set VAULT_ADDR=http://127.0.0.1:8200
+#  set VAULT_TOKEN=hvs.6jz8gQNhaKhZWSnZBixfvPSt
+#  vault server -dev
+
