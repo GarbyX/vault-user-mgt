@@ -1,9 +1,9 @@
 server:
   port: 5000
 
-vault:
-  address: http://127.0.0.1:8200
-  token: hvs.6jz8gQNhaKhZWSnZBixfvPSt
+#vault:
+#  address: http://127.0.0.1:8200
+#  token: hvs.6jz8gQNhaKhZWSnZBixfvPSt
 
 #spring:
 #  cloud:

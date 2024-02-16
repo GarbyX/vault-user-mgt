@@ -2,11 +2,17 @@ package com.garby.vault;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+//import org.springframework.boot.context.properties.ConfigurationProperties;
+//import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.io.ClassPathResource;
+//import org.springframework.util.ResourceUtils;
+import org.yaml.snakeyaml.Yaml;
 import com.bettercloud.vault.Vault;
 import com.bettercloud.vault.VaultConfig;
 import com.bettercloud.vault.VaultException;
+import java.io.IOException;
+import java.io.InputStream;
 
 @SpringBootApplication
 public class VaultApplication {
@@ -16,37 +22,17 @@ public class VaultApplication {
 	}
 
 	@Bean
-	public Vault vault(VaultProperties vaultProperties) throws VaultException {
-		// Configure Vault using properties from application.yaml
-		VaultConfig config = new VaultConfig()
-				.address(vaultProperties.getAddress())
-				.token(vaultProperties.getToken());
+	public Vault vault() throws VaultException, IOException {
+		// Load Vault configuration from vault.yaml file
+		InputStream inputStream = new ClassPathResource("config/vault.yaml").getInputStream();
+		Yaml yaml = new Yaml();
+		VaultConfig vaultConfig;
+		try (inputStream) {
+			vaultConfig = yaml.loadAs(inputStream, VaultConfig.class);
+		}
 
 		// Initialize Vault instance
-		return new Vault(config);
-	}
-
-	@ConfigurationProperties(prefix = "vault")
-	class VaultProperties {
-		private String address;
-		private String token;
-
-		// Getters and setters
-		public String getAddress() {
-			return address;
-		}
-
-		public void setAddress(String address) {
-			this.address = address;
-		}
-
-		public String getToken() {
-			return token;
-		}
-
-		public void setToken(String token) {
-			this.token = token;
-		}
+		return new Vault(vaultConfig);
 	}
 
 }
