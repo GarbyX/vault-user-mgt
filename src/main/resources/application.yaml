@@ -3,13 +3,13 @@ server:
 
 vault:
   address: http://127.0.0.1:8200
-  token: your_defined_token
+  token: hvs.6jz8gQNhaKhZWSnZBixfvPSt
 
-spring:
-  cloud:
-    vault:
-      token: hvs.6jz8gQNhaKhZWSnZBixfvPSt
-      scheme: http
+#spring:
+#  cloud:
+#    vault:
+#      token: hvs.6jz8gQNhaKhZWSnZBixfvPSt
+#      scheme: http
 
 
 #  set VAULT_ADDR=http://127.0.0.1:8200

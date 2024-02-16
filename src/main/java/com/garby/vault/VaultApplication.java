@@ -2,6 +2,7 @@ package com.garby.vault;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import com.bettercloud.vault.Vault;
 import com.bettercloud.vault.VaultConfig;
@@ -15,14 +16,37 @@ public class VaultApplication {
 	}
 
 	@Bean
-	public Vault vault() throws VaultException {
-		// Configure Vault
+	public Vault vault(VaultProperties vaultProperties) throws VaultException {
+		// Configure Vault using properties from application.yaml
 		VaultConfig config = new VaultConfig()
-				.address("http://127.0.0.1:8200")
-				.token("your_defined_token");       // Replace with your defined token
+				.address(vaultProperties.getAddress())
+				.token(vaultProperties.getToken());
 
 		// Initialize Vault instance
 		return new Vault(config);
+	}
+
+	@ConfigurationProperties(prefix = "vault")
+	class VaultProperties {
+		private String address;
+		private String token;
+
+		// Getters and setters
+		public String getAddress() {
+			return address;
+		}
+
+		public void setAddress(String address) {
+			this.address = address;
+		}
+
+		public String getToken() {
+			return token;
+		}
+
+		public void setToken(String token) {
+			this.token = token;
+		}
 	}
 
 }
